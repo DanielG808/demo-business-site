@@ -11,6 +11,14 @@ const resolvers = {
         console.log(error);
       }
     },
+    getUsers: async () => {
+      try {
+        const users = await User.find();
+        return users;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   Mutation: {
     addUser: async (parent, { email, password }) => {
