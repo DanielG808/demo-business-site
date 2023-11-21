@@ -19,6 +19,12 @@ const resolvers = {
 
       return { token, user };
     },
+    deleteUser: async (parent, { email }) => {
+      const deletedUser = await User.findOneAndDelete(email);
+
+      console.log(`User, ${deletedUser.email}, has been deleted.`);
+      return deletedUser;
+    },
   },
 };
 
