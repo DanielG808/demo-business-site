@@ -27,6 +27,25 @@ const resolvers = {
 
       return { token, user };
     },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        console.log("User not found.");
+        throw AuthenticationError;
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        console.log("Incorrect or missing password.");
+        throw AuthenticationError;
+      }
+
+      const token = signToken(user);
+      console.log(`${user.email} is now logged in.`);
+      return { token, user };
+    },
     deleteUser: async (parent, { email }) => {
       const deletedUser = await User.findOneAndDelete(email);
 
