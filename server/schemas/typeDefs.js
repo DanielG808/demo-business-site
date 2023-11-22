@@ -3,6 +3,7 @@ type User {
     _id: ID!
     email: String!
     password: String!
+    admin: Boolean
 }
 
 type Auth {
@@ -16,7 +17,7 @@ type Query {
 }
 
 type Mutation {
-    addUser(email: String!, password: String!): Auth!
+    addUser(email: String!, password: String!, admin: String): Auth!
     login(email: String!, password: String!): Auth!
     deleteUser(email: String!): User!
 }
