@@ -1,5 +1,3 @@
-import React from "react";
-
 const Login = () => {
   return (
     <>
@@ -15,9 +13,11 @@ const Login = () => {
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
+                name="email"
                 type="text"
                 placeholder="Email address"
+                onChange={handleChange}
+                required
               ></input>
             </div>
             <div className="mb-6">
@@ -26,9 +26,11 @@ const Login = () => {
               </label>
               <input
                 className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
+                name="password"
                 type="password"
                 placeholder="******************"
+                onChange={handleChange}
+                required
               ></input>
             </div>
             <div className="flex items-center justify-between">

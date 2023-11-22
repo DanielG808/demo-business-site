@@ -1,6 +1,14 @@
-import React from "react";
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { SIGN_UP } from "../utils/userQueries";
+import Auth from "../utils/auth";
 
 const Signup = () => {
+  const [formState, setFormState] = useState({
+    email: "",
+    password: "",
+  });
+
   return (
     <>
       <div class="text-center py-2">
