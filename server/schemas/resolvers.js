@@ -35,6 +35,13 @@ const resolvers = {
         throw AuthenticationError;
       }
 
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        console.log("Incorrect or missing password.");
+        throw AuthenticationError;
+      }
+
       const token = signToken(user);
       console.log(`${user.email} is now logged in.`);
       return { token, user };
