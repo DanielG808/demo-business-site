@@ -1,7 +1,7 @@
 const Login = () => {
   return (
     <>
-      <div class="text-center py-2">
+      <div className="text-center py-2">
         <h1 className="block text-gray-700 text-md font-bold mb-2">Login</h1>
       </div>
       <div className="flex justify-center my-5">
@@ -16,8 +16,6 @@ const Login = () => {
                 name="email"
                 type="text"
                 placeholder="Email address"
-                onChange={handleChange}
-                required
               ></input>
             </div>
             <div className="mb-6">
@@ -29,8 +27,6 @@ const Login = () => {
                 name="password"
                 type="password"
                 placeholder="******************"
-                onChange={handleChange}
-                required
               ></input>
             </div>
             <div className="flex items-center justify-between">
