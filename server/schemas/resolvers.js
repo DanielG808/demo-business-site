@@ -37,9 +37,9 @@ const resolvers = {
         console.log(error);
       }
     },
-    getProductsByName: async (parent, { name }) => {
+    getProductsByText: async (parent, { input }) => {
       try {
-        const products = await Product.find(name);
+        const products = await Product.find({ $text: { $search: input } });
         return products;
       } catch (error) {
         console.log(error);

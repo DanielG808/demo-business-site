@@ -23,6 +23,7 @@ type Query {
 
     getProductById(id: String!): Product!
     getProducts: [Product!]
+    getProductsByText(input: String!): [Product!]
 }
 
 type Mutation {
