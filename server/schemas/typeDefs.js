@@ -20,6 +20,8 @@ type Auth {
 type Query {
     getUser(id: String!): User!
     getUsers: [User!]
+
+    getProducts: [Product!]
 }
 
 type Mutation {
