@@ -1,11 +1,18 @@
-const { User } = require("../models");
+const { User, Product } = require("../models");
 const { signToken, AuthenticationError } = require("../utils");
 
 const resolvers = {
   Query: {
+    // User Queries
     getUser: async (parent, { id }) => {
       try {
-        const user = await User.findById(id);
+        const user = await User.findById(id).populate("products");
+
+        if (!user) {
+          console.log(`Product with ID ${id} not found.`);
+          return null;
+        }
+
         return user;
       } catch (error) {
         console.log(error);
@@ -13,14 +20,52 @@ const resolvers = {
     },
     getUsers: async () => {
       try {
-        const users = await User.find();
+        const users = await User.find().populate("products");
         return users;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // Product Queries
+    getProductById: async (parent, { id }) => {
+      try {
+        const product = await Product.findById(id);
+
+        if (!product) {
+          console.log(`Product with ID ${id} not found.`);
+          return null;
+        }
+
+        return product;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getProducts: async () => {
+      try {
+        const products = await Product.find();
+        return products;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    productSearch: async (parent, { input }) => {
+      try {
+        const products = await Product.find({ $text: { $search: input } });
+
+        if (!products) {
+          console.log(`There are no products with the search term ${input}`);
+          return null;
+        }
+
+        return products;
       } catch (error) {
         console.log(error);
       }
     },
   },
   Mutation: {
+    // User mutations
     addUser: async (parent, { email, password, admin }) => {
       const user = await User.create({ email, password, admin });
       const token = signToken(user);
@@ -51,6 +96,35 @@ const resolvers = {
 
       console.log(`User, ${deletedUser.email}, has been deleted.`);
       return deletedUser;
+    },
+    // Product mutations
+    addProduct: async (parent, { id, name, description }) => {
+      const product = await Product.create({ name, description });
+
+      console.log(`New product, ${name}, added!`);
+
+      const user = await User.findByIdAndUpdate(
+        { _id: id },
+        { $push: { products: product } },
+        { new: true }
+      ).populate("products");
+      return user;
+    },
+    // BROKEN UPDATE FUNCTION; RETURNS PRODUCT BUT DOESNT UPDATE
+    // updateProductName: async (parent, { id, newName }) => {
+    //   const product = await Product.findByIdAndUpdate(
+    //     { _id: id },
+    //     { name: newName },
+    //     { new: true }
+    //   );
+
+    //   return product;
+    // },
+    deleteProduct: async (parent, { id }) => {
+      const product = await Product.findByIdAndDelete(id);
+
+      console.log(`${product.name} has been deleted.`);
+      return product;
     },
   },
 };
