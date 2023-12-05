@@ -21,6 +21,14 @@ const resolvers = {
       }
     },
     // Product Queries
+    getProductById: async (parent, { id }) => {
+      try {
+        const product = await Product.findById(id);
+        return product;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     getProducts: async () => {
       try {
         const products = await Product.find();
