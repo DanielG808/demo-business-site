@@ -104,25 +104,21 @@ const resolvers = {
       console.log(`New product, ${name}, added!`);
       return product;
     },
-    updateProduct: async (id, name, description) => {
-      try {
-        const product = await Product.findByIdAndUpdate(
-          id,
-          {
-            name: name,
-            description: description,
-          },
-          { new: true }
-        );
+    // BROKEN UPDATE FUNCTION; RETURNS PRODUCT BUT DOESNT UPDATE
+    // updateProductName: async (parent, { id, newName }) => {
+    //   const product = await Product.findByIdAndUpdate(
+    //     id,
+    //     { name: newName },
+    //     { new: true }
+    //   );
 
-        if (!product) {
-          console.log(`Product with ID ${id} not found.`);
-        }
+    //   return product;
+    // },
+    deleteProduct: async (parent, { id }) => {
+      const product = await Product.findByIdAndDelete(id);
 
-        return product;
-      } catch (error) {
-        console.log(error);
-      }
+      console.log(`${product.name} has been deleted.`);
+      return product;
     },
   },
 };
