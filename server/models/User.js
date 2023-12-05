@@ -3,6 +3,10 @@ const { Schema } = mongoose;
 const bcrypt = require("bcrypt");
 
 const userSchema = new Schema({
+  admin: {
+    type: Boolean,
+    default: false,
+  },
   email: {
     type: String,
     required: true,
@@ -14,10 +18,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 8,
   },
-  admin: {
-    type: Boolean,
-    default: false,
-  },
+  products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
 });
 
 userSchema.pre("save", async function (next) {

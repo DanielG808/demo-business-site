@@ -6,7 +6,7 @@ const resolvers = {
     // User Queries
     getUser: async (parent, { id }) => {
       try {
-        const user = await User.findById(id);
+        const user = await User.findById(id).populate("products");
 
         if (!user) {
           console.log(`Product with ID ${id} not found.`);
@@ -20,7 +20,7 @@ const resolvers = {
     },
     getUsers: async () => {
       try {
-        const users = await User.find();
+        const users = await User.find().populate("products");
         return users;
       } catch (error) {
         console.log(error);
@@ -98,16 +98,22 @@ const resolvers = {
       return deletedUser;
     },
     // Product mutations
-    addProduct: async (parent, { name, description }) => {
+    addProduct: async (parent, { id, name, description }) => {
       const product = await Product.create({ name, description });
 
       console.log(`New product, ${name}, added!`);
-      return product;
+
+      const user = await User.findByIdAndUpdate(
+        { _id: id },
+        { $push: { products: product } },
+        { new: true }
+      ).populate("products");
+      return user;
     },
     // BROKEN UPDATE FUNCTION; RETURNS PRODUCT BUT DOESNT UPDATE
     // updateProductName: async (parent, { id, newName }) => {
     //   const product = await Product.findByIdAndUpdate(
-    //     id,
+    //     { _id: id },
     //     { name: newName },
     //     { new: true }
     //   );

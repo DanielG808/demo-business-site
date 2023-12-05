@@ -1,15 +1,16 @@
 const typeDefs = `
-type User {
-    _id: ID!
-    email: String!
-    password: String!
-    admin: Boolean
-}
-
 type Product {
     _id: ID!
     name: String!
     description: String!
+}
+
+type User {
+    _id: ID!
+    admin: Boolean
+    email: String!
+    password: String!
+    products: [Product!]
 }
 
 type Auth {
@@ -31,7 +32,7 @@ type Mutation {
     login(email: String!, password: String!): Auth!
     deleteUser(email: String!): User!
 
-    addProduct(name: String!, description: String!): Product!
+    addProduct(id: String!, name: String!, description: String!): User!
     deleteProduct(id: String!): Product!
 }
 `;
