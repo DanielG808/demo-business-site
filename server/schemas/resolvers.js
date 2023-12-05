@@ -56,7 +56,7 @@ const resolvers = {
     },
     // Product mutations
     addProduct: async (parent, { name, description }) => {
-      const product = await new Product.create({ name, description });
+      const product = await Product.create({ name, description });
 
       console.log(`New product, ${name}, added!`);
       return product;

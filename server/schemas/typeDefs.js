@@ -6,6 +6,12 @@ type User {
     admin: Boolean
 }
 
+type Product {
+    _id: ID!
+    name: String!
+    description: String!
+}
+
 type Auth {
     token: ID!
     user: User!
@@ -20,6 +26,8 @@ type Mutation {
     addUser(email: String!, password: String!, admin: String): Auth!
     login(email: String!, password: String!): Auth!
     deleteUser(email: String!): User!
+
+    addProduct(name: String!, description: String!): Product!
 }
 `;
 
