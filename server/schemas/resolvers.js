@@ -1,8 +1,9 @@
-const { User } = require("../models");
+const { User, Product } = require("../models");
 const { signToken, AuthenticationError } = require("../utils");
 
 const resolvers = {
   Query: {
+    // User Queries
     getUser: async (parent, { id }) => {
       try {
         const user = await User.findById(id);
@@ -21,6 +22,7 @@ const resolvers = {
     },
   },
   Mutation: {
+    // User mutations
     addUser: async (parent, { email, password, admin }) => {
       const user = await User.create({ email, password, admin });
       const token = signToken(user);
@@ -51,6 +53,13 @@ const resolvers = {
 
       console.log(`User, ${deletedUser.email}, has been deleted.`);
       return deletedUser;
+    },
+    // Product mutations
+    addProduct: async (parent, { name, description }) => {
+      const product = await new Product.create({ name, description });
+
+      console.log(`New product, ${name}, added!`);
+      return product;
     },
   },
 };
