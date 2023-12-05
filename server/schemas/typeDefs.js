@@ -21,6 +21,7 @@ type Query {
     getUser(id: String!): User!
     getUsers: [User!]
 
+    getProductById(id: String!): Product!
     getProducts: [Product!]
 }
 

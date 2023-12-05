@@ -37,6 +37,14 @@ const resolvers = {
         console.log(error);
       }
     },
+    getProductsByName: async (parent, { name }) => {
+      try {
+        const products = await Product.find(name);
+        return products;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   Mutation: {
     // User mutations
