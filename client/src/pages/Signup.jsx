@@ -1,9 +1,28 @@
-import React from "react";
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+
+import { SIGN_UP } from "../utils/userQueries";
+import Auth from "../utils/auth";
 
 const Signup = () => {
+  const [formState, setFormState] = useState({
+    email: "",
+    password: "",
+  });
+  const [signUp, { error, data }] = useMutation(SIGN_UP);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
   return (
     <>
-      <div class="text-center py-2">
+      <div className="text-center py-2">
         <h1 className="block text-gray-700 text-md font-bold mb-2">Sign Up</h1>
       </div>
       <div className="flex justify-center my-5">
@@ -18,6 +37,8 @@ const Signup = () => {
                 id="username"
                 type="text"
                 placeholder="Email address"
+                onChange={handleChange}
+                required
               ></input>
             </div>
             <div className="mb-6">
@@ -29,6 +50,8 @@ const Signup = () => {
                 id="password"
                 type="password"
                 placeholder="******************"
+                onChange={handleChange}
+                required
               ></input>
             </div>
             <div className="flex items-center justify-between">
