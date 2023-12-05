@@ -7,6 +7,12 @@ const resolvers = {
     getUser: async (parent, { id }) => {
       try {
         const user = await User.findById(id);
+
+        if (!user) {
+          console.log(`Product with ID ${id} not found.`);
+          return null;
+        }
+
         return user;
       } catch (error) {
         console.log(error);
@@ -24,6 +30,12 @@ const resolvers = {
     getProductById: async (parent, { id }) => {
       try {
         const product = await Product.findById(id);
+
+        if (!product) {
+          console.log(`Product with ID ${id} not found.`);
+          return null;
+        }
+
         return product;
       } catch (error) {
         console.log(error);
@@ -40,6 +52,12 @@ const resolvers = {
     productSearch: async (parent, { input }) => {
       try {
         const products = await Product.find({ $text: { $search: input } });
+
+        if (!products) {
+          console.log(`There are no products with the search term ${input}`);
+          return null;
+        }
+
         return products;
       } catch (error) {
         console.log(error);
@@ -85,6 +103,26 @@ const resolvers = {
 
       console.log(`New product, ${name}, added!`);
       return product;
+    },
+    updateProduct: async (id, name, description) => {
+      try {
+        const product = await Product.findByIdAndUpdate(
+          id,
+          {
+            name: name,
+            description: description,
+          },
+          { new: true }
+        );
+
+        if (!product) {
+          console.log(`Product with ID ${id} not found.`);
+        }
+
+        return product;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

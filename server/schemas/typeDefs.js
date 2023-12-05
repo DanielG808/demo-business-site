@@ -32,6 +32,7 @@ type Mutation {
     deleteUser(email: String!): User!
 
     addProduct(name: String!, description: String!): Product!
+    updateProduct(name: String!, description: String!): Product!
 }
 `;
 
